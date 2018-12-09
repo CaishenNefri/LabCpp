@@ -18,6 +18,8 @@ public:
 
 	void Wypisz() const;
 	void Wpisz();
+
+	int Porownaj(const Data & wzor) const;
 	 
 private:
 	int m_nDzien;

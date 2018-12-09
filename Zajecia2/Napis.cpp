@@ -33,3 +33,11 @@ void Napis::Wpisz()
 {
 	cin >> m_pszNapis;
 }
+
+int Napis::SprawdzNapis(const char * por_napis) const
+{
+	std::string nowy = por_napis;
+	std::string klasowy = m_pszNapis;
+
+	return nowy.compare(klasowy);
+}

@@ -47,29 +47,29 @@ void Pracownik::Wpisz()
 {
 	std::cout << "\nWpisz imie: ";
 	m_Imie.Wpisz();
-	m_Nazwisko.Wpisz();
 	std::cout << "\nWpisz nazwisko: ";
-	m_DataUrodzenia.Wpisz();
+	m_Nazwisko.Wpisz();
 	std::cout << "\nWpisz date urodzenia: ";
+	m_DataUrodzenia.Wpisz();
+	
 }
 
 int Pracownik::SprawdzImie(const char * por_imie) const
 {
-	std::string pierwsze(por_imie);
-	std::string drugie(m_Imie.Zwroc());
-
-	return pierwsze.compare(drugie);
+	m_Imie.SprawdzNapis(por_imie);
 }
 
 int Pracownik::SprawdzNazwisko(const char * por_nazwisko) const
 {
-	std::string pierwsze(por_nazwisko);
-	std::string drugie(m_Nazwisko.Zwroc());
-
-	return pierwsze.compare(drugie);
+	return m_Nazwisko.SprawdzNapis(por_nazwisko);
 }
+
 
 int Pracownik::Porownaj(const Pracownik & wzorzec) const
 {
+	int a, b, c;
+	a = SprawdzImie(wzorzec.Imie);
+	b = SprawdzNazwisko(wzorzec.Nazwisko);
+	b = m_DataUrodzenia.Porownaj(wzorzec.DataUrodzenia);
 	return 0;
 }

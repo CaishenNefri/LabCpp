@@ -45,6 +45,27 @@ void Data::Wpisz()
 	Koryguj();
 }
 
+int Data::Porownaj(const Data & wzor) const
+{
+	// pozniejsza zakladam ze (2000 jest data pozniejsza) niz 1900
+	if (m_nDzien == wzor.Dzien &&
+		m_nMiesiac == wzor.Miesiac &&
+		m_nRok = wzor.Rok)
+		return 0;
+	
+	if      (m_nRok < wzor.Rok) return 1;
+	else if (m_nRok > wzor.Rok) return -1;
+	
+	if		(m_nMiesiac < wzor.Miesiac) return 1;
+	else if (m_nMiesiac > wzor.Miesiac) return -1;
+
+	if (m_nDzien < wzor.Dzien) return 1;
+	else if (m_nDzien > wzor.Dzien) return -1;
+
+	cout << "ERROR: Tu metoda nie powinna trafic!!\n";
+	return 0;
+}
+
 void Data::Koryguj()
 {
 	//miesiace z 31 dniami: 1 3 5 7 8 10 12

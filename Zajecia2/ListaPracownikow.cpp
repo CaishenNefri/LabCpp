@@ -17,9 +17,7 @@ ListaPracownikow::~ListaPracownikow()
 void ListaPracownikow::Dodaj(const Pracownik & p)
 {
 	Pracownik *nowy = new Pracownik;
-	nowy->Imie = p.Imie;
-	nowy->Nazwisko = p.Nazwisko;
-	nowy->DataUrodzenia = p.DataUrodzenia;
+	*nowy = p;
 
 	if (m_pPoczatek == nullptr)
 		m_pPoczatek = nowy;
