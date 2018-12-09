@@ -1,0 +1,23 @@
+#pragma once
+
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+class Napis
+{
+public:
+	Napis();
+	~Napis();
+
+	const char* Zwroc() const;
+	void Ustaw(const char* nowy_napis);
+	void Wypisz() const;
+	void Wpisz();
+
+
+private:
+	char m_pszNapis[40];
+};
+
