@@ -3,10 +3,12 @@
 //Instrukcja: https://www.p-programowanie.pl/cpp/lista-jednokierunkowa-c/
 
 
-ListaPracownikow::ListaPracownikow()
+ListaPracownikow::ListaPracownikow():
+	m_pPoczatek(nullptr),
+	m_nLiczbaPracownikow(0)
 {
-	m_pPoczatek = nullptr;
-	m_nLiczbaPracownikow = 0;
+	/*m_pPoczatek = nullptr;
+	m_nLiczbaPracownikow = 0;*/
 }
 
 
@@ -14,26 +16,55 @@ ListaPracownikow::~ListaPracownikow()
 {
 }
 
+//TODO: zrob funkcja dodajaca rosnoco elementy
 void ListaPracownikow::Dodaj(const Pracownik & p)
 {
-	Pracownik *nowy = new Pracownik;
-	*nowy = p;
+	Pracownik *nowy, *glowa;
+	nowy = new Pracownik(p);
+	glowa = m_pPoczatek;
 
-	if (m_pPoczatek == nullptr)
+	if (m_nLiczbaPracownikow == 0)
+	{
 		m_pPoczatek = nowy;
+	}
 	else
 	{
-		Pracownik *temp = m_pPoczatek;
-
-		// znajdujemy wskaznik na ostatni element
-		while (temp->m_pNastepny)
+		while (1)
 		{
-			temp = temp->m_pNastepny;
+			if ((glowa->Porownaj(p) == 0))
+			{
+				cout << endl << "WARNING: Nie mozna dodac tego samego pracownika" << endl;
+				return;
+
+			}
+			if (glowa->Porownaj(p) > 0)
+			{
+				nowy->m_pNastepny = m_pPoczatek;
+				m_pPoczatek = nowy;
+				break;
+			}
+
+
+			if (glowa->m_pNastepny == nullptr)
+			{
+				nowy->m_pNastepny = glowa->m_pNastepny;
+				glowa->m_pNastepny = nowy;
+				break;
+			}
+
+			if ((glowa->m_pNastepny->Porownaj(p) > 0))
+			{
+				nowy->m_pNastepny = glowa->m_pNastepny;
+				glowa->m_pNastepny = nowy;
+				break;
+			}
+
+			glowa = glowa->m_pNastepny;
 		}
 
-		temp->m_pNastepny = nowy;
-		nowy->m_pNastepny = nullptr;
 	}
+
+	m_nLiczbaPracownikow++;
 }
 
 void ListaPracownikow::Usun(const Pracownik & wzorzec)
@@ -49,6 +80,7 @@ void ListaPracownikow::WypiszPracownikow() const
 		wskaznik->Wypisz();
 		wskaznik = wskaznik->m_pNastepny;
 	}
+	wskaznik->Wypisz();
 }
 
 const Pracownik * ListaPracownikow::Szukaj(const char * nazwisko, const char * imie) const
@@ -60,7 +92,7 @@ const Pracownik * ListaPracownikow::Szukaj(const char * nazwisko, const char * i
 		{
 			if (!wskaznik->SprawdzImie(imie) && !wskaznik->SprawdzNazwisko(nazwisko))
 				return wskaznik;
-		} while (wskaznik->m_pNastepny != nullptr);
+		} while ((wskaznik = wskaznik->m_pNastepny) != nullptr);
 	}
 	
 	return nullptr;

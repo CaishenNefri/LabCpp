@@ -2,9 +2,9 @@
 
 
 
-Pracownik::Pracownik()
-{
-	m_pNastepny = nullptr;
+Pracownik::Pracownik():
+	m_pNastepny(nullptr)
+{   
 }
 
 
@@ -56,7 +56,7 @@ void Pracownik::Wpisz()
 
 int Pracownik::SprawdzImie(const char * por_imie) const
 {
-	m_Imie.SprawdzNapis(por_imie);
+	return m_Imie.SprawdzNapis(por_imie);
 }
 
 int Pracownik::SprawdzNazwisko(const char * por_nazwisko) const
@@ -67,9 +67,25 @@ int Pracownik::SprawdzNazwisko(const char * por_nazwisko) const
 
 int Pracownik::Porownaj(const Pracownik & wzorzec) const
 {
-	int a, b, c;
-	a = SprawdzImie(wzorzec.Imie);
-	b = SprawdzNazwisko(wzorzec.Nazwisko);
-	b = m_DataUrodzenia.Porownaj(wzorzec.DataUrodzenia);
+	int I, N, D;
+	I = SprawdzImie(wzorzec.m_Imie.Zwroc());
+	N = SprawdzNazwisko(wzorzec.m_Nazwisko.Zwroc());
+	D = m_DataUrodzenia.Porownaj(wzorzec.m_DataUrodzenia);
+
+	if (!I && !N && !D)
+		return 0;
+
+	if (N > 0)
+		return 1;
+	else if(N<0) return -1;
+	if (I > 0)
+		return 1;
+	else if(I<0) return -1;
+	if (D > 0)
+		return 1;
+	else if(D<0) return -1;
+
+
+	cout << "ERROR: Metoda Pracownik:Porownaj nie powinna tu trafic!!\n";
 	return 0;
 }
